@@ -5,6 +5,7 @@ let responseImages = {};
 let images = [];
 let database;
 let showPattern = false;
+let totalResponses = 0;
 
 function preload() {
   for (let i = 1; i <= 5; i++) {
@@ -64,20 +65,25 @@ const firebaseConfig = {
   firebase.initializeApp(firebaseConfig);
   database = firebase.database();
 
-  database.ref("responses").on("child_added", snapshot => {
-    let response = snapshot.val().response;
-    if (responses[response]) {
-      responses[response]++;
-    } else {
-      responses[response] = 1;
-      responseList.push(response);
-      responseImages[response] = random(images);
-    }
-    redraw();
-  });
+ database.ref("responses").on("child_added", (snapshot) => {
+  let response = snapshot.val().response;
+  totalResponses++;
 
-  noLoop();
-}
+  if (totalResponses >= 100) {
+    resetGraph();
+    return;
+  }
+
+  if (responses[response]) {
+    responses[response]++;
+  } else {
+    responses[response] = 1;
+    responseList.push(response);
+    responseImages[response] = random(images);
+  }
+
+  redraw();
+});
 
 function handleSubmit() {
   let val = input.value().trim();
@@ -95,7 +101,19 @@ function draw() {
     drawBarGraph();
   }
 }
+function resetGraph() {
+  // Clear Firebase
+  database.ref("responses").remove();
 
+  // Clear local data
+  responses = {};
+  responseList = [];
+  responseImages = {};
+  totalResponses = 0;
+  showPattern = false;
+
+  redraw();
+}
 function drawBarGraph() {
   fill(0);
   textSize(16);
