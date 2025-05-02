@@ -8,7 +8,7 @@ let showPattern = false;
 
 function preload() {
   for (let i = 1; i <= 5; i++) {
-    images.push(loadImage('images/img' + i + '.png'));
+    images.push(loadImage('images/warp' + i + '.jpg'));
   }
 }
 
