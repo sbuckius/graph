@@ -37,6 +37,20 @@ function setup() {
     saveCanvas('jacquard_pattern', 'png');
   });
 
+let showGraphButton = createButton('Show Bar Graph');
+showGraphButton.position(savePatternButton.x + savePatternButton.width + 10, 20);
+showGraphButton.mousePressed(() => {
+  showPattern = false;
+  redraw();
+});
+
+  let showPatternButton = createButton('Show Pattern');
+showPatternButton.position(showGraphButton.x + showGraphButton.width + 10, 20);
+showPatternButton.mousePressed(() => {
+  showPattern = true;
+  redraw();
+});
+  
 const firebaseConfig = {
   apiKey: "AIzaSyA9n5ehDW0CGvro2ZMzUnziups4TvaN-bg",
   authDomain: "test-interactive-ed653.firebaseapp.com",
