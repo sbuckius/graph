@@ -1,4 +1,4 @@
-let input, submitButton, saveGraphButton, savePatternButton;
+let input, submitButton, saveGraphButton, savePatternButton; showGraphButton; showPatternButton;
 let responses = {};
 let responseList = [];
 let responseImages = {};
@@ -37,14 +37,14 @@ function setup() {
     saveCanvas('jacquard_pattern', 'png');
   });
 
-let showGraphButton = createButton('Show Bar Graph');
+showGraphButton = createButton('Show Bar Graph');
 showGraphButton.position(savePatternButton.x + savePatternButton.width + 10, 20);
 showGraphButton.mousePressed(() => {
   showPattern = false;
   redraw();
 });
 
-  let showPatternButton = createButton('Show Pattern');
+showPatternButton = createButton('Show Pattern');
 showPatternButton.position(showGraphButton.x + showGraphButton.width + 10, 20);
 showPatternButton.mousePressed(() => {
   showPattern = true;
